@@ -11,6 +11,7 @@ import {
   where,
 } from "firebase/firestore";
 import { signOut } from "firebase/auth";
+import { useNavigate } from "react-router-dom";
 
 export default function OrderManagement({ user }) {
   const [orders, setOrders] = useState([]);
@@ -28,6 +29,7 @@ export default function OrderManagement({ user }) {
     notes: "In Transit",
     assignedTo: "",
   });
+  const navigate = useNavigate();
 
   // 🟢 Fetch all users (for assigning)
   const fetchUsers = async () => {
@@ -136,6 +138,7 @@ export default function OrderManagement({ user }) {
   return (
     <div style={{ padding: "20px" }}>
       <h2>Welcome, {user?.name}</h2>
+      <button onClick={() => navigate("/admin")}>Manage Users</button>
       <button onClick={handleLogout}>Logout</button>
       <h2>📦 Order Management</h2>
 
@@ -400,6 +403,7 @@ const thStyle = {
   border: "1px solid #ccc",
   padding: "8px",
   textAlign: "left",
+  color:"#000000ff"
 };
 
 const tdStyle = {

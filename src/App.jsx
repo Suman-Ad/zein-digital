@@ -8,6 +8,7 @@ import Register from "./pages/Register.jsx";
 import Login from "./pages/Login.jsx";
 import AdminUserManagement from "./pages/AdminUserManagement.jsx";
 import ProtectedRoute from "./components/ProtectedRoute.jsx";
+import TaskPage from './pages/Task.jsx';
 
 
 function App() {
@@ -21,10 +22,17 @@ function App() {
   return (
     <BrowserRouter>
       <Routes>
-        <Route path="/" element={
-          <ProtectedRoute>
-            <OrderManagement user={user} />
-          </ProtectedRoute>}
+        <Route
+          path="/order-management"
+          element={
+            <ProtectedRoute>
+              {user && (user.role === "Admin" || user.role === "Manager") ? (
+                <OrderManagement user={user} />
+              ) : (
+                <div style={{ padding: "20px", color: "red" }}>Access Denied 🚫</div>
+              )}
+            </ProtectedRoute>
+          }
         />
         <Route
           path="/admin"
@@ -34,12 +42,21 @@ function App() {
             </ProtectedRoute>
           }
         />
+
+        <Route
+          path="/"
+          element={
+            <ProtectedRoute>
+              <TaskPage user={user} />
+            </ProtectedRoute>
+          }
+        />
         {/* Public Pages */}
         <Route path="/register" element={<Register />} />
         <Route path="/login" element={<Login />} />
         {/* Fallback */}
-        {/* <Route path="/" element={<Navigate to="/" />} />
-        <Route path="*" element={<Navigate to="/" />} /> */}
+        {/* <Route path="/" element={<Navigate to="/" />} /> */}
+        {/* <Route path="*" element={<Navigate to="/" />} /> */}
       </Routes>
     </BrowserRouter>
   )

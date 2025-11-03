@@ -44,7 +44,11 @@ export default function Login() {
 
         setUser(fullUserData);
         alert(`✅ Welcome ${userData.name || user.email}!`);
-        navigate("/");
+        if (userData.role === "Admin" || userData.role === "Manager") {
+          navigate("/order-management")
+        } else {
+          navigate("/");
+        }
       } else {
         alert("⚠️ User record not found in Firestore!");
       }
